@@ -9,6 +9,7 @@ import { getFilmsListExtraMarkup } from './components/films-list-extra';
 import { getFilmCardMarkup } from './components/card';
 import { getShowMoreBtnMarkup } from './components/show-more-button';
 import { getFilmDetailsMarkup } from './components/film-details';
+import { getFilm } from './mock';
 
 const header = document.querySelector(`.header`);
 const mainContainer = document.querySelector(`.main`);
@@ -43,3 +44,5 @@ extraLists.forEach((list) => {
   new Array(2).fill(``).forEach(() => renderComponent(extraFilmsContainer, getFilmCardMarkup(), Position.BEFOREEND));
 });
 // renderComponent(body, getFilmDetailsMarkup(), Position.BEFOREEND);
+
+console.log(getFilm());
