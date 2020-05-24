@@ -9,11 +9,16 @@ import { getFilmsListExtraMarkup } from './components/films-list-extra';
 import { getFilmCardMarkup } from './components/card';
 import { getShowMoreBtnMarkup } from './components/show-more-button';
 import { getFilmDetailsMarkup } from './components/film-details';
-import { getFilm } from './mock';
+import { Mock } from './mock';
+
+const LOAD_NUM = 5;
 
 const header = document.querySelector(`.header`);
 const mainContainer = document.querySelector(`.main`);
 const body = document.querySelector(`body`);
+
+const films = Mock.load();
+let shownFilms = films.slice(0, LOAD_NUM);
 
 const renderComponent = (container, component, position) => {
   container.insertAdjacentHTML(position, component);
@@ -31,7 +36,7 @@ renderComponent(filmsArea, getFilmsListMarkup(), Position.BEFOREEND);
 
 const filmsList = document.querySelector(`.films-list`);
 const filmsContainer = filmsList.querySelector(`.films-list__container`);
-new Array(5).fill(``).forEach(() => renderComponent(filmsContainer, getFilmCardMarkup(), Position.BEFOREEND));
+shownFilms.forEach((film) => renderComponent(filmsContainer, getFilmCardMarkup(film), Position.BEFOREEND));
 renderComponent(filmsList, getShowMoreBtnMarkup(), Position.BEFOREEND);
 
 new Array(2).fill(``).forEach(() => {
@@ -41,8 +46,9 @@ new Array(2).fill(``).forEach(() => {
 const extraLists = filmsArea.querySelectorAll(`.films-list--extra`);
 extraLists.forEach((list) => {
   const extraFilmsContainer = list.querySelector(`.films-list__container`);
-  new Array(2).fill(``).forEach(() => renderComponent(extraFilmsContainer, getFilmCardMarkup(), Position.BEFOREEND));
+  shownFilms.slice(0, 2).forEach((film) => renderComponent(extraFilmsContainer, getFilmCardMarkup(film), Position.BEFOREEND));
 });
-// renderComponent(body, getFilmDetailsMarkup(), Position.BEFOREEND);
 
-console.log(getFilm());
+renderComponent(body, getFilmDetailsMarkup(shownFilms[0]), Position.BEFOREEND);
+
+console.log(films);

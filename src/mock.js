@@ -1,3 +1,7 @@
+import { Time } from './constants';
+const MAX_NUM = 3;
+const FILMS_NUM = 10;
+
 const filmTitles = [
   `Shawshank Redemtion`,
   `The Green Mile`,
@@ -50,11 +54,62 @@ const GENRES = [
   `Cartoon`,
 ];
 
+const PEOPLE = [
+  `Tim Macoveev`,
+  `John Doe`,
+  `Ivan Ivanov`,
+  `Sergey Petrov`,
+  `Nikolai Sergeev`,
+  `Quentin Tarantino`,
+  `Penelopa Cruz`,
+  `Anthony Mann`,
+  `Anne Wigton`,
+  `Heinz Herald`,
+  `Richard Weil`,
+  `Mary Beth`,
+  `Dan Duryea`,
+];
+
+const EMOTIONS = [
+  `angry`,
+  `puke`,
+  `smile`,
+  `sleeping`,
+];
+
 const getRandomBool = (chance = 0.5) => Math.random() > chance;
 const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)];
 const getRandomNumber = (min = 0, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const getRandomDuration = () => `${getRandomNumber(0, 3)}h ${getRandomNumber(0, 59)}m`;
+const getRandomSorting = () => Math.random() - 0.5;
 
-export const getFilm = () => ({
+const getRandomSet = (items, num = MAX_NUM) =>
+  [...new Set(items.sort(getRandomSorting).slice(0, num))];
+
+const getComment = () => ({
+  emotion: getRandomItem(EMOTIONS),
+  text: getRandomItem(sentences),
+  author: getRandomItem(PEOPLE),
+  date: Date.now() + getRandomNumber(-Time.WEEK, Time.WEEK),
+});
+
+const getComments = (num = MAX_NUM) => Array.from({ length: num }, getComment);
+
+const getFilm = () => ({
   title: getRandomItem(filmTitles),
   poster: getRandomItem(filmPosters),
+  rating: getRandomNumber(10, 100) / 10,
+  year: getRandomNumber(1929, 2020),
+  duration: getRandomDuration(),
+  genres: getRandomSet(GENRES, getRandomNumber(1, MAX_NUM)),
+  description: getRandomSet(sentences, getRandomNumber(1, MAX_NUM)).join(` `),
+  isFavorite: getRandomBool(),
+  isWatched: getRandomBool(),
+  comments: getComments(getRandomNumber(0, 5)),
 });
+
+const getFilms = (num = FILMS_NUM) => Array.from({ length: num }, getFilm);
+
+export const Mock = {
+  load: getFilms,
+};
