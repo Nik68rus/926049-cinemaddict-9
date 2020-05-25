@@ -1,6 +1,6 @@
 import { Time } from './constants';
 const MAX_NUM = 3;
-const FILMS_NUM = 10;
+const FILMS_NUM = 20;
 
 const filmTitles = [
   `Shawshank Redemtion`,
@@ -70,12 +70,23 @@ const PEOPLE = [
   `Dan Duryea`,
 ];
 
+const COUNTRIES = [
+  `USA`,
+  `Italy`,
+  `Russia`,
+  `India`,
+  `Spain`,
+  `France`,
+];
+
 const EMOTIONS = [
   `angry`,
   `puke`,
   `smile`,
   `sleeping`,
 ];
+
+const AGE_LIMITS = [14, 16, 18, 21];
 
 const getRandomBool = (chance = 0.5) => Math.random() > chance;
 const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)];
@@ -97,14 +108,20 @@ const getComments = (num = MAX_NUM) => Array.from({ length: num }, getComment);
 
 const getFilm = () => ({
   title: getRandomItem(filmTitles),
+  director: getRandomItem(PEOPLE),
+  writers: getRandomSet(PEOPLE, getRandomNumber(1, 3)),
+  actors: getRandomSet(PEOPLE, getRandomNumber(1, 3)),
   poster: getRandomItem(filmPosters),
   rating: getRandomNumber(10, 100) / 10,
   year: getRandomNumber(1929, 2020),
+  country: getRandomItem(COUNTRIES),
   duration: getRandomDuration(),
   genres: getRandomSet(GENRES, getRandomNumber(1, MAX_NUM)),
+  ageLimit: getRandomItem(AGE_LIMITS),
   description: getRandomSet(sentences, getRandomNumber(1, MAX_NUM)).join(` `),
   isFavorite: getRandomBool(),
   isWatched: getRandomBool(),
+  inWatchlist: getRandomBool(),
   comments: getComments(getRandomNumber(0, 5)),
 });
 
