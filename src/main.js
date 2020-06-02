@@ -96,6 +96,16 @@ const renderMovieCard = (container, movie) => {
   if (closeBtn) {
     closeBtn.addEventListener(`click`, closePopup);
   }
+
+  filmDetails.getElement().querySelector(`textarea`)
+    .addEventListener(`focus`, () => {
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    });
+
+  filmDetails.getElement().querySelector(`textarea`)
+    .addEventListener(`blur`, () => {
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
 };
 
 const renderShowMoreBtn = (container) => {
