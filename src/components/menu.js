@@ -1,31 +1,36 @@
-const MENU = [`All movies`, `Watchlist`, `History`, `Favorites`];
+import { createElement } from '../utils/utils';
 
-const getMoviesCount = (list, cb) => list.filter(cb).length;
-const findWatchlistMovies = (movie) => movie.inWatchlist;
-const findWatchedMovies = (movie) => movie.isWatched;
-const findFavoriteMovies = (movie) => movie.isFavorite;
+export class Menu {
+  constructor(items) {
+    this._items = items;
+    this._element = null;
+  }
 
-export const getMenuData = (movies) => {
-  return [
-    { title: `All movies`, count: movies.length, active: true },
-    { title: `Watchlist`, count: getMoviesCount(movies, findWatchlistMovies), active: false },
-    { title: `History`, count: getMoviesCount(movies, findWatchedMovies), active: false },
-    { title: `Favorite`, count: getMoviesCount(movies, findFavoriteMovies), active: false },
-    { title: `Stats`, active: false },
-  ];
-};
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
 
-const getMenuId = (menuItem) => menuItem.split(` `)[0].toLowerCase();
+  removeElement() {
+    this._element = null;
+  }
 
-export const getMenuMarkup = (items) => {
-  return `
-  <nav class="main-navigation">
-    ${items.map(({ title, count, active }) => {
-    const id = getMenuId(title);
+  _getId(menuItem) {
+    return menuItem.split(` `)[0].toLowerCase();
+  }
+
+  getTemplate() {
     return `
+  <nav class="main-navigation">
+    ${this._items.map(({ title, count, active }) => {
+      const id = this._getId(title);
+      return `
       <a href="#${id}" class="main-navigation__item ${active ? `main-navigation__item--active` : ``} ${id === `stats` ? `main-navigation__item--additional` : ``}">${title}${id === `all` || id === `stats` ? `` : ` <span class="main-navigation__item-count">${count}</span>`} </a>
     `;
-  }).join(`\n`)}
+    }).join(`\n`)}
   </nav>
-  `;
-};
+  `.trim();
+  }
+}
