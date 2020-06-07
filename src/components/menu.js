@@ -1,20 +1,9 @@
-import { createElement } from '../utils/utils';
+import AbstractComponent from './abstract-component';
 
-export class Menu {
+export default class Menu extends AbstractComponent {
   constructor(items) {
+    super();
     this._items = items;
-    this._element = null;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   _getId(menuItem) {

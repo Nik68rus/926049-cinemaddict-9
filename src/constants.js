@@ -13,3 +13,5 @@ export const Mark = {
   SLEEPING: `./images/emoji/sleeping.png`,
   SMILE: `./images/emoji/smile.png`,
 };
+
+export const LOAD_NUM = 5;

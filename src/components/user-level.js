@@ -1,21 +1,10 @@
 
-import { createElement } from '../utils/utils';
+import AbstractComponent from './abstract-component';
 
-export class UserLevel {
+export default class UserLevel extends AbstractComponent {
   constructor(filmsWatched) {
+    super();
     this._filmsWatched = filmsWatched;
-    this._element = null;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   _getUserStatus(quantity) {

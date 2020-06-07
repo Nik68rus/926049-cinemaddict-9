@@ -127,31 +127,6 @@ const getFilm = () => ({
 
 const getFilms = (num = FILMS_NUM) => Array.from({ length: num }, getFilm);
 
-const getMoviesCount = (list, cb) => list.filter(cb).length;
-const findWatchlistMovies = (movie) => movie.inWatchlist;
-const findWatchedMovies = (movie) => movie.isWatched;
-const findFavoriteMovies = (movie) => movie.isFavorite;
-
-const getMenuData = (movies) => {
-  return [
-    { title: `All movies`, count: movies.length, active: true },
-    { title: `Watchlist`, count: getMoviesCount(movies, findWatchlistMovies), active: false },
-    { title: `History`, count: getMoviesCount(movies, findWatchedMovies), active: false },
-    { title: `Favorite`, count: getMoviesCount(movies, findFavoriteMovies), active: false },
-    { title: `Stats`, active: false },
-  ];
-};
-
-const getFilmsLists = () => {
-  return [
-    { title: `All movies. Upcomming` },
-    { title: `Top rated`, extra: true },
-    { title: `Most commented`, extra: true },
-  ];
-};
-
 export const Mock = {
   load: getFilms,
-  menu: getMenuData,
-  lists: getFilmsLists
 };

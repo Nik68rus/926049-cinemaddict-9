@@ -1,21 +1,10 @@
-import { createElement } from '../utils/utils';
+import AbstractComponent from './abstract-component';
 
-export class FilmsList {
+export default class FilmsList extends AbstractComponent {
   constructor({ title, extra }) {
+    super();
     this._title = title;
     this._extra = extra;
-    this._element = null;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   getTemplate() {
