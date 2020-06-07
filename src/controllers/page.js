@@ -15,6 +15,7 @@ export default class PageController {
     this._footerStatistic = new Footer(this._movies.length);
     this._showMoreBtn = new ShowMoreBtn();
     this._onShowMoreBtnClick = this._onShowMoreBtnClick.bind(this);
+    this._sortedMovies = movies;
   }
 
   init() {
@@ -34,6 +35,7 @@ export default class PageController {
     render(this._filmsArea.getElement().querySelector(`.films-list`), this._showMoreBtn.getElement(), Position.BEFOREEND);
     this._showMoreBtn.getElement().addEventListener(`click`, this._onShowMoreBtnClick);
     this._updateExtraLists();
+    this._sorting.getElement().addEventListener(`click`, (evt) => this._onSortLinkClick(evt));
   }
 
   _getMenuData(movies) {
@@ -133,5 +135,28 @@ export default class PageController {
     mostCommentedMovies.forEach((movie) => {
       this._renderMovie(mostCommentedList.querySelector(`.films-list__container`), movie);
     });
+  }
+
+  _onSortLinkClick(evt) {
+    evt.preventDefault();
+    if (evt.target.tagName.toLowerCase() !== `a`) {
+      return;
+    }
+    this._mainFilmsContainer.innerHTML = ``;
+
+    switch (evt.target.dataset.sort) {
+      case `default`:
+        this._sortedMovies = this._movies;
+        break;
+      case `date`:
+        this._sortedMovies = this._movies.slice().sort((a, b) => b.year - a.year);
+        break;
+      case `rate`:
+        this._sortedMovies = this._movies.slice().sort((a, b) => b.rating - a.rating);
+        break;
+    }
+
+    this._sortedMovies.slice(0, this._shownFilms).forEach((movie) => this._renderMovie(this._mainFilmsContainer, movie));
+
   }
 }
